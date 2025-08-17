@@ -1505,9 +1505,306 @@
             console.log('Не забудьте заменить API_BASE_URL на ваш MockAPI проект');
         });
     </script>
+    // Добавьте этот код перед закрывающим тегом </script>
+
+// Система переводов
+const translations = {
+    'RU': {
+        // Заголовки
+        'heroTitle': 'Lunix',
+        'heroText': 'Мы предоставляем вам лучший клиент для комфортной игры, который даст вам наилучшие впечатления от игры.',
+        'featuresTitle': 'Наши преимущества',
+        'featuresSubtitle': 'Мы кратко изложили вам то, что вы гарантированно получите после скачки нашего клиента.',
+        
+        // Кнопки
+        'downloadBtn': 'Скачать',
+        'moreInfoBtn': 'Подробнее',
+        'supportLink': 'Поддержка',
+        'authBtn': 'Авторизация',
+        'logoutBtn': 'Выйти',
+        'backBtn': '← На главную',
+        'dashboardTitle': 'Личный кабинет',
+        
+        // Особенности
+        'feature1Title': 'Красивый внешний вид',
+        'feature1Text': 'В нашем клиенте присутствует большое количество визуальных функций, которые сделают вашу игру более красочной.',
+        
+        'feature2Title': 'Настраиваемость',
+        'feature2Text': 'В нашем клиенте вы можете настроить практически любую функцию под себя.',
+        
+        'feature3Title': 'Оптимизация',
+        'feature3Text': 'Мы постоянно улучшаем оптимизацию нашего клиента и самой игры.',
+        
+        'feature4Title': 'Частые обновления',
+        'feature4Text': 'Мы регулярно обновляем функционал в нашем клиенте, добавляя новые функции.',
+        
+        'feature5Title': 'Лучшая поддержка',
+        'feature5Text': 'У нас самая лучшая поддержка, которая разбирается в своём деле.',
+        
+        // Футер
+        'footerTitle': 'LunixDLC',
+        'footerSubtitle': 'Лучший клиент для комфортной игры',
+        'nav1': 'Главная',
+        'nav2': 'Скачать',
+        'nav3': 'Поддержка',
+        'docs1': 'Обработка персональных данных',
+        'docs2': 'Пользовательское соглашение',
+        'docs3': 'Правила пользования',
+        'contacts': 'Контакты',
+        'copyright': 'Copyright © LunixDLC 2025',
+        
+        // Авторизация
+        'loginTitle': 'Вход',
+        'registerTitle': 'Регистрация',
+        'usernameLabel': 'Имя пользователя',
+        'emailLabel': 'Email',
+        'passwordLabel': 'Пароль',
+        'confirmPasswordLabel': 'Повторите пароль',
+        'loginBtn': 'Войти',
+        'registerBtn': 'Зарегистрироваться',
+        'noAccount': 'Нет аккаунта?',
+        'haveAccount': 'Уже есть аккаунт?',
+        'signUp': 'Зарегистрироваться',
+        'signIn': 'Войти'
+    },
+    'EN': {
+        'heroTitle': 'Lunix',
+        'heroText': 'We provide you with the best client for comfortable gaming that will give you the best gaming experience.',
+        'featuresTitle': 'Our Advantages',
+        'featuresSubtitle': 'We have briefly outlined what you will definitely get after downloading our client.',
+        
+        'downloadBtn': 'Download',
+        'moreInfoBtn': 'More info',
+        'supportLink': 'Support',
+        'authBtn': 'Authorization',
+        'logoutBtn': 'Logout',
+        'backBtn': '← Back to home',
+        'dashboardTitle': 'Dashboard',
+        
+        'feature1Title': 'Beautiful design',
+        'feature1Text': 'Our client has a lot of visual features that will make your game more colorful.',
+        
+        'feature2Title': 'Customizability',
+        'feature2Text': 'In our client you can customize almost any feature to your liking.',
+        
+        'feature3Title': 'Optimization',
+        'feature3Text': 'We constantly improve the optimization of our client and the game itself.',
+        
+        'feature4Title': 'Frequent updates',
+        'feature4Text': 'We regularly update the functionality in our client, adding new features.',
+        
+        'feature5Title': 'Best support',
+        'feature5Text': 'We have the best support team that knows their business.',
+        
+        'footerTitle': 'LunixDLC',
+        'footerSubtitle': 'The best client for comfortable gaming',
+        'nav1': 'Home',
+        'nav2': 'Download',
+        'nav3': 'Support',
+        'docs1': 'Privacy Policy',
+        'docs2': 'Terms of Service',
+        'docs3': 'Usage Rules',
+        'contacts': 'Contacts',
+        'copyright': 'Copyright © LunixDLC 2025',
+        
+        'loginTitle': 'Login',
+        'registerTitle': 'Register',
+        'usernameLabel': 'Username',
+        'emailLabel': 'Email',
+        'passwordLabel': 'Password',
+        'confirmPasswordLabel': 'Confirm password',
+        'loginBtn': 'Login',
+        'registerBtn': 'Register',
+        'noAccount': 'No account?',
+        'haveAccount': 'Already have an account?',
+        'signUp': 'Sign up',
+        'signIn': 'Sign in'
+    },
+    'PL': {
+        'heroTitle': 'Lunix',
+        'heroText': 'Zapewniamy Ci najlepszego klienta do komfortowej gry, który zapewni Ci najlepsze wrażenia z gry.',
+        'featuresTitle': 'Nasze zalety',
+        'featuresSubtitle': 'W skrócie przedstawiliśmy to, co na pewno otrzymasz po pobraniu naszego klienta.',
+        
+        'downloadBtn': 'Pobierz',
+        'moreInfoBtn': 'Więcej',
+        'supportLink': 'Wsparcie',
+        'authBtn': 'Autoryzacja',
+        'logoutBtn': 'Wyloguj',
+        'backBtn': '← Wróć do strony głównej',
+        'dashboardTitle': 'Panel użytkownika',
+        
+        'feature1Title': 'Piękny wygląd',
+        'feature1Text': 'Nasz klient posiada wiele funkcji wizualnych, które uczynią Twoją grę bardziej kolorową.',
+        
+        'feature2Title': 'Konfigurowalność',
+        'feature2Text': 'W naszym kliencie możesz dostosować prawie każdą funkcję do swoich potrzeb.',
+        
+        'feature3Title': 'Optymalizacja',
+        'feature3Text': 'Stale poprawiamy optymalizację naszego klienta i samej gry.',
+        
+        'feature4Title': 'Częste aktualizacje',
+        'feature4Text': 'Regularnie aktualizujemy funkcjonalność w naszym kliencie, dodając nowe funkcje.',
+        
+        'feature5Title': 'Najlepsze wsparcie',
+        'feature5Text': 'Mamy najlepszy zespół wsparcia, który zna się na rzeczy.',
+        
+        'footerTitle': 'LunixDLC',
+        'footerSubtitle': 'Najlepszy klient do komfortowej gry',
+        'nav1': 'Strona główna',
+        'nav2': 'Pobierz',
+        'nav3': 'Wsparcie',
+        'docs1': 'Polityka prywatności',
+        'docs2': 'Regulamin',
+        'docs3': 'Zasady użytkowania',
+        'contacts': 'Kontakt',
+        'copyright': 'Copyright © LunixDLC 2025',
+        
+        'loginTitle': 'Logowanie',
+        'registerTitle': 'Rejestracja',
+        'usernameLabel': 'Nazwa użytkownika',
+        'emailLabel': 'Email',
+        'passwordLabel': 'Hasło',
+        'confirmPasswordLabel': 'Potwierdź hasło',
+        'loginBtn': 'Zaloguj',
+        'registerBtn': 'Zarejestruj',
+        'noAccount': 'Nie masz konta?',
+        'haveAccount': 'Masz już konto?',
+        'signUp': 'Zarejestruj się',
+        'signIn': 'Zaloguj się'
+    }
+};
+
+// Текущий язык (по умолчанию русский)
+let currentLanguage = 'RU';
+
+// Функция для переключения языка
+function switchLanguage(lang) {
+    currentLanguage = lang;
+    updateLanguage();
+    saveLanguageToStorage();
+}
+
+// Функция для обновления языка на странице
+function updateLanguage() {
+    const lang = translations[currentLanguage];
+    
+    // Обновляем язык в хедере
+    document.querySelector('.language-switch span').textContent = currentLanguage;
+    document.querySelector('.support-btn').textContent = lang.supportLink;
+    document.getElementById('authBtn').textContent = lang.authBtn;
+    document.getElementById('logoutBtn').textContent = lang.logoutBtn;
+    
+    // Обновляем главную страницу
+    document.querySelector('.hero h1').textContent = lang.heroTitle;
+    document.querySelector('.hero p').textContent = lang.heroText;
+    document.querySelector('.btn-primary').textContent = lang.downloadBtn;
+    document.querySelector('.btn-secondary').textContent = lang.moreInfoBtn;
+    document.querySelector('.features h2').textContent = lang.featuresTitle;
+    document.querySelector('.features p').textContent = lang.featuresSubtitle;
+    
+    // Обновляем карточки особенностей
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards[0].querySelector('h3').textContent = lang.feature1Title;
+    featureCards[0].querySelector('p').textContent = lang.feature1Text;
+    featureCards[1].querySelector('h3').textContent = lang.feature2Title;
+    featureCards[1].querySelector('p').textContent = lang.feature2Text;
+    featureCards[2].querySelector('h3').textContent = lang.feature3Title;
+    featureCards[2].querySelector('p').textContent = lang.feature3Text;
+    featureCards[3].querySelector('h3').textContent = lang.feature4Title;
+    featureCards[3].querySelector('p').textContent = lang.feature4Text;
+    featureCards[4].querySelector('h3').textContent = lang.feature5Title;
+    featureCards[4].querySelector('p').textContent = lang.feature5Text;
+    
+    // Обновляем футер
+    document.querySelectorAll('.footer-section h3')[0].textContent = lang.footerTitle;
+    document.querySelectorAll('.footer-section p')[0].textContent = lang.footerSubtitle;
+    document.querySelectorAll('.footer-section a')[0].textContent = lang.nav1;
+    document.querySelectorAll('.footer-section a')[1].textContent = lang.nav2;
+    document.querySelectorAll('.footer-section a')[2].textContent = lang.nav3;
+    document.querySelectorAll('.footer-section a')[3].textContent = lang.docs1;
+    document.querySelectorAll('.footer-section a')[4].textContent = lang.docs2;
+    document.querySelectorAll('.footer-section a')[5].textContent = lang.docs3;
+    document.querySelector('.footer-section:nth-child(4) h3').textContent = lang.contacts;
+    document.querySelector('.footer-bottom p').textContent = lang.copyright;
+    
+    // Обновляем модальное окно авторизации
+    document.querySelector('#loginForm .auth-title').textContent = lang.loginTitle;
+    document.querySelector('#registerForm .auth-title').textContent = lang.registerTitle;
+    document.querySelector('#loginForm .form-group:nth-child(1) .form-label').textContent = lang.usernameLabel;
+    document.querySelector('#registerForm .form-group:nth-child(1) .form-label').textContent = lang.usernameLabel;
+    document.querySelector('#registerForm .form-group:nth-child(2) .form-label').textContent = lang.emailLabel;
+    document.querySelector('#loginForm .form-group:nth-child(2) .form-label').textContent = lang.passwordLabel;
+    document.querySelector('#registerForm .form-group:nth-child(3) .form-label').textContent = lang.passwordLabel;
+    document.querySelector('#registerForm .form-group:nth-child(4) .form-label').textContent = lang.confirmPasswordLabel;
+    document.querySelector('#loginForm .auth-submit').textContent = lang.loginBtn;
+    document.querySelector('#registerForm .auth-submit').textContent = lang.registerBtn;
+    document.querySelector('#loginForm .auth-switch').innerHTML = `${lang.noAccount} <span class="auth-switch-link" id="showRegister">${lang.signUp}</span>`;
+    document.querySelector('#registerForm .auth-switch').innerHTML = `${lang.haveAccount} <span class="auth-switch-link" id="showLogin">${lang.signIn}</span>`;
+    
+    // Обновляем дашборд
+    document.getElementById('backBtn').textContent = lang.backBtn;
+    document.querySelector('.dashboard-title').textContent = lang.dashboardTitle;
+    document.querySelectorAll('.dashboard-card h3')[0].textContent = 'Profile information';
+    document.querySelectorAll('.dashboard-card h3')[1].textContent = 'Account statistics';
+    document.querySelectorAll('.dashboard-card h3')[2].textContent = 'LunixDLC';
+}
+
+// Сохранение языка в localStorage
+function saveLanguageToStorage() {
+    localStorage.setItem('lunixDLC_language', currentLanguage);
+}
+
+// Загрузка языка из localStorage
+function loadLanguageFromStorage() {
+    const lang = localStorage.getItem('lunixDLC_language');
+    if (lang && translations[lang]) {
+        currentLanguage = lang;
+    }
+}
+
+// Инициализация переключателя языка
+function initLanguageSwitcher() {
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const lang = this.textContent;
+            switchLanguage(lang);
+            
+            // Закрываем выпадающее меню после выбора
+            document.querySelector('.language-dropdown').style.maxHeight = '0';
+        });
+    });
+}
+
+// Обновляем инициализацию приложения
+document.addEventListener('DOMContentLoaded', function() {
+    // Загружаем язык из localStorage
+    loadLanguageFromStorage();
+    
+    // Инициализируем переключатель языка
+    initLanguageSwitcher();
+    
+    // Обновляем язык на странице
+    updateLanguage();
+    
+    // Остальной код инициализации...
+    pageManager = new PageManager();
+    userManager = new UserManager();
+    authModal = new AuthModal(userManager);
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+        pageManager.showHome();
+    });
+
+    // ... остальной код инициализации
+});
+    </script>
 </body>
 
 </html>
+
 
 
 
