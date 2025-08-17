@@ -1,0 +1,874 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delta » Личный кабинет</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/img/ico_logo.png">
+
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="vendor/aos/aos.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        *{
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 10% auto;
+        }
+        .profile-header {
+            color: white;
+            padding: 30px;
+            border-radius: 30px;
+            position: relative;
+        }
+        .profile-header img {
+            border-radius: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-header img:hover {
+            transform: scale(1.1);
+        }
+        .profile-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .profile-header p {
+            margin: 0;
+            font-size: 16px;
+            color: #cfcfcf;
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+            border-bottom: none;
+            margin-top: 20px;
+        }
+        .nav-tabs .nav-link {
+            color: #999;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 5px;
+            background-color: #252627;
+            border-radius: 12px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #e81e2d;
+            color: white;
+        }
+        .nav-link:hover {
+            color: white;
+            background-color: #e81e2d;
+        }
+        .tab-content {
+            border-radius: 20px;
+        }
+        .tab-content h3 {
+            color: #a6a6a6;
+        }
+        .tab-content p, .tab-content ul, .tab-content li, .tab-content form {
+            color: #d1d1d1;
+        }
+        .form-label {
+            color: #bbb;
+        }
+        .form-control {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+
+        }
+        .form-control:focus {
+            background-color: #444;
+            color: #e0e0e0;
+            border-color: #e81e2d;
+            box-shadow: none;
+        }
+        .data-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+        }
+        .data-card:hover {
+            transform: scale(1.01);
+        }
+        .data-card h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #c9d1d9;
+        }
+        .data-card p {
+            font-size: 15px;
+            color: #8b949e;
+            margin-bottom: 5px;
+        }
+        .data-card i {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #e81e2d;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-download {
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+            background-color: #e81e2d;
+            color: white;
+         }
+        .btn-download:hover{
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+            background-color: #e81e2d;
+            color: white;
+        }
+        .activation-key-form, .change-password-form, .fromStyle {
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 15px;
+             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .activation-key-form h4, .change-password-form h4 .fromStyle h4 {
+            font-size: 22px;
+            color: #ffffff;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            color: #ffffff;
+            outline: none;
+            border: none;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+
+        }
+        .form-control:focus{
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .card-body{
+            transition: transform 0.2s ease-in-out;
+        }
+        .card-body:hover{
+            transform: scale(1.05);
+         }
+
+        .activation-key-form input::placeholder, .change-password-form input::placeholder .fromStyle::placeholder {
+            color: #aaa;
+        }
+
+        .activation-key-form button, .change-password-form button, .fromStyle button {
+            width: 200px;
+            padding: 4px;
+            font-size: 16px;
+            background-color: #e81e2d;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+
+        }
+
+        .activation-key-form button:hover, .change-password-form button:hover, .fromStyle button:hover {
+            background-color: #e81e2d;
+        }
+
+        .activation-key-form .form-group, .change-password-form .form-group, .fromStyle .form-group {
+            margin-bottom: 20px;
+        }
+
+
+        input[type=file]::file-selector-button {
+            margin-left: 1px;
+            border-radius: 6px;
+        }
+
+
+
+    </style>
+</head>
+<body class="index-page">
+<header><div>
+
+<header id="header" class="header  fixed-top ">
+    <div class="container-xl d-flex align-items-center">
+
+        <a href="/" class="logo d-flex align-items-center me-auto">
+            <img src="img/logo.png" alt="">
+            <h1>Delta</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu" >
+            <ul>
+                <li><a href="/">Главная</a></li>
+
+
+                <li><a  href="api/Loader">Скачать лаунчер</a></li>
+
+
+                <li><a href="#footer">Документы</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+
+        <a class="flex-md-shrink-0 btn-logout" style="margin-left: 30px; border-radius: 4px" href="/logout">Выйти</a>
+
+
+
+        
+    </div>
+</header>
+</div></header>
+
+
+<div class="container" data-aos="fade-out">
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-11">
+
+            <div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-content" type="button" role="tab" aria-controls="overview-content" aria-selected="true">Аккаунт</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="purchase-tab" data-bs-toggle="tab" data-bs-target="#purchase-content" type="button" role="tab" aria-controls="purchase-content" aria-selected="false">Покупка клиента</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-content" type="button" role="tab" aria-controls="settings-content" aria-selected="false">Дополнительно</button>
+                </li>
+                
+            </ul>
+            </div>
+
+        </div>
+
+    <div class="row gy-5 gy-lg-0" >
+        <div class="col-12 col-lg-6" id="hiddenDiv" data-aos="fade-right">
+
+
+            <div class="profile-header mt-5 mb-5">
+                <img src="../img/MHF_Steve.png" width="100px">
+                <h1>KrendelGuard</h1>
+                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cba0b9aea5afaea78bacbeaab9afe5b9be">[email&#160;protected]</a></p>
+                 <p>UID: 24877</p>
+            </div>
+
+
+
+            <div class="data-card">
+                <h4>
+                    <i class="bi bi-shield-check"></i>
+                    Статус учётной записи
+                </h4>
+                
+
+                <div>
+                    <p></p>
+                    <div class="status-container">
+                        <p style="color: #dc3545; text-shadow: 0 0 16px rgba(220, 53, 69, 0.7);">Подписка отсутствует!</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="col-12 col-lg-6" data-aos="fade-left" data-aos-delay="100" id="sideDiv">
+
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="overview-content" role="tabpanel" aria-labelledby="overview-tab">
+                    <h3>Данные</h3>
+
+                    <div class="data-card">
+                        <h4>
+                            <i class="bi bi-calendar3"></i>
+                            Дата регистрации
+                        </h4>
+                        <p>16.11.2024 23:35</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4>
+                            <i class="bi bi-person-circle"></i>
+                            Логин
+                        </h4>
+                        <p>KrendelGuard</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4>
+                            <i class="bi bi-award"></i>
+                            Роль
+                        </h4>
+                        <p>Пользователь</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4>
+                            <i class="bi bi-laptop"></i>
+                            HWID
+                        </h4>
+                        <p>Неизвестный</p>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="purchase-content" role="tabpanel" aria-labelledby="purchase-tab">
+
+                    <div class="text-center">
+                        <h1 class="mb-4 display-6 text-white fw-bold mt-5 mb-5">Наши продукты</h1>
+                    </div>
+
+                    <div class="row" style="text-align: left;" data-aos="fade-left">
+
+                        <tbody>
+
+                        <tr>
+
+                            <div class="col-md-4 mb-4">
+                                <div>
+                                    <div class="card-body text-white">
+                                        <img src="img/plus.png" width="185px">
+                                        <div class="card-content">
+                                            <h5 class="card-title">Delta+ (Plus) месяц</h5>
+                                            <p class="card-text" style="width: 100%; font-size: 13px; color: gray; font-weight: 400;">С этим дополнением будет доступно большей функций.</p>
+                                            <p>Цена: <span>250</span>₽</p>
+                                            <a href="/checkout?id=1" class="btn btn-getstarted">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+
+                        <tr>
+
+                            <div class="col-md-4 mb-4">
+                                <div>
+                                    <div class="card-body text-white">
+                                        <img src="img/lifetime.png" width="185px">
+                                        <div class="card-content">
+                                            <h5 class="card-title">Delta навсегда</h5>
+                                            <p class="card-text" style="width: 100%; font-size: 13px; color: gray; font-weight: 400;">Вы получаете клиент абсолютно навсегда и все обновления.</p>
+                                            <p>Цена: <span>549</span>₽</p>
+                                            <a href="/checkout?id=2" class="btn btn-getstarted">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+
+                        <tr>
+
+                            <div class="col-md-4 mb-4">
+                                <div>
+                                    <div class="card-body text-white">
+                                        <img src="img/1month.png" width="185px">
+                                        <div class="card-content">
+                                            <h5 class="card-title">Delta месяц</h5>
+                                            <p class="card-text" style="width: 100%; font-size: 13px; color: gray; font-weight: 400;">Вы получаете клиент всего на 30 дней и обновления клиента.</p>
+                                            <p>Цена: <span>349</span>₽</p>
+                                            <a href="/checkout?id=3" class="btn btn-getstarted">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+
+                        <tr>
+
+                            <div class="col-md-4 mb-4">
+                                <div>
+                                    <div class="card-body text-white">
+                                        <img src="img/hwid.png" width="185px">
+                                        <div class="card-content">
+                                            <h5 class="card-title">Сброс HWID</h5>
+                                            <p class="card-text" style="width: 100%; font-size: 13px; color: gray; font-weight: 400;">Вы сможете запуститься с нового персонального компьютера в клиент.</p>
+                                            <p>Цена: <span>250</span>₽</p>
+                                            <a href="/checkout?id=4" class="btn btn-getstarted">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+                        </tbody>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="settings-content" role="tabpanel" aria-labelledby="settings-tab">
+                    <h3>Параметры</h3>
+
+                    <div class="activation-key-form formStyle">
+                        <h4>Активация продукта</h4>
+                        <form id="activate-from">
+                            <div class="form-group">
+                                <label for="activation-key" class="form-label">Введите код активации</label>
+                                <input type="text" class="form-control" name="key" id="activation-key" placeholder="Код активации">
+                                <div id="activate_resoult" class="mt-2"></div>
+                            </div>
+                            <button type="submit" class="btn btn-getstarted">Активировать</button>
+                        </form>
+                    </div>
+
+                    <div class="change-password-form mt-4">
+                        <h4>Изменение пароля</h4>
+                        <form id="change_password_form">
+                            <div class="form-group">
+                                <label for="current-password" class="form-label">Текущий пароль</label>
+                                <input type="password" class="form-control" name="old_password" id="current-password" placeholder="Текущий пароль">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password" class="form-label">Новый пароль</label>
+                                <input type="password" class="form-control" name="new_password" id="new-password" placeholder="Новый пароль">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" class="form-label">Повторите новый пароль</label>
+                                <input type="password" class="form-control" name="repeat_password" id="confirm-password" placeholder="Повторите новый пароль">
+                            </div>
+                            <p id="result" class="text-danger"></p>
+                            <button type="submit" class="btn btn-success">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    </div>
+
+</div>
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="vendor/aos/aos.js"></script>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        function handleTabChange() {
+            const activeTab = document.querySelector('.nav-tabs .nav-link.active');
+
+            const activeTabId = activeTab ? activeTab.getAttribute('id') : '';
+
+            const hiddenDiv = document.getElementById('hiddenDiv');
+            const sideDiv = document.getElementById('sideDiv');
+
+            if (activeTabId === 'purchase-tab' || activeTabId === 'admin-tab') {
+                if (hiddenDiv) {
+                    hiddenDiv.style.display = 'none';
+                    sideDiv.classList.remove('col-lg-6');
+                }
+            } else {
+                if (hiddenDiv) {
+                    hiddenDiv.style.display = 'block';
+                    sideDiv.classList.add('col-lg-6');
+                }
+            }
+        }
+        const tabs = document.querySelectorAll('.nav-tabs .nav-link');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', handleTabChange);
+        });
+        handleTabChange();
+    });
+
+    const selectTexwork = document.getElementById('selectTexwork');
+    if (selectTexwork) {
+        selectTexwork.addEventListener('change', function() {
+            var selectedValue = this.value;
+            const texWork = document.getElementById('texWork');
+            if (texWork) {
+                texWork.value = selectedValue;
+            }
+        });
+    }
+
+    const infoPromoForm = $("#getInfoPromo");
+    if (infoPromoForm.length) {
+        infoPromoForm.submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "infoPromo",
+                data: $(this).serialize(),
+                success: function (response) {
+                    $("#getInfoPromoResult").html(response);
+                }
+            });
+        });
+    }
+    const giveRoleForm = $("#roleSet");
+    if (giveRoleForm.length) {
+        giveRoleForm.submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/giveRole",
+                data: $(this).serialize(),
+                success: function (response) {
+                    $("#roleSetResult").html(response);
+                }
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        const texworkForm = $("#texworkID");
+        if (texworkForm.length) {
+            texworkForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/texworks",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#texWorkResult").html(response);
+                    }
+                });
+            });
+        }
+
+        const subRemoveForm = $("#subRemove");
+        if (subRemoveForm.length) {
+            subRemoveForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "removeSub",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#subRemoveResult").html(response);
+                    }
+                });
+            });
+        }
+
+        const generateKeysForm = $("#generateKeys");
+        if (generateKeysForm.length) {
+            generateKeysForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/generateKeys",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#generetedkeys textarea").val(response);
+                    },
+                    error: function () {
+                        alert("Ошибка при генерации ключей.");
+                    }
+                });
+            });
+        }
+
+
+
+        const resetpassDiv = $("#resetPass");
+        if (resetpassDiv.length) {
+            resetpassDiv.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/resetPass",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#resetPassResult").html(response);
+                    }
+                });
+            });
+        }
+
+        const resetHWIDForm = $("#resetHWID");
+        if (resetHWIDForm.length) {
+            resetHWIDForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/resetHWID",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#resetIDResult").html(response);
+                    }
+                });
+            });
+        }
+
+
+
+        const givePlus = $("#givePlus");
+        if (givePlus.length) {
+            givePlus.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/givePlus",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#givePlusResult").html(response);
+                    }
+                });
+            });
+        }
+
+
+        const cleanPlus = $("#cleanPlus");
+        if (cleanPlus.length) {
+            cleanPlus.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/cleanPlus",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#cleanPlusReult").html(response);
+                    }
+                });
+            });
+        }
+
+
+        const giveProductForm = $("#giveProduct");
+        if (giveProductForm.length) {
+            giveProductForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/giveProduct",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#giveProductResult").html(response);
+                    }
+                });
+            });
+        }
+
+
+
+        const activateForm = $("#activate-from");
+        if (activateForm.length) {
+            activateForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/activate",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#activate_resoult").html(response);
+                    }
+                });
+            });
+        }
+
+        const promoCreateForm = $("#promoCreate");
+        if (promoCreateForm.length) {
+            promoCreateForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/createPromo",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#promoResult").html(response);
+                    }
+                });
+            });
+        }
+
+        const changePasswordForm = $("#change_password_form");
+        if (changePasswordForm.length) {
+            changePasswordForm.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "api/change_password",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response !== "OK") {
+                            $("#result").html(response);
+                        } else {
+                            $("#result").html('<p class="text-success">Пароль успешно обновлен!</p>');
+                        }
+                    }
+                });
+            });
+        }
+
+        const uploadForm = document.getElementById('uploadForm');
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                var formData = new FormData(uploadForm);
+                var xhr = new XMLHttpRequest();
+
+                xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                        var percentComplete = (e.loaded / e.total) * 100;
+                        var progressBar = document.getElementById('progressBar');
+                        if (progressBar) {
+                            progressBar.style.display = 'block';
+                            progressBar.value = percentComplete;
+                        }
+                    }
+                }, false);
+
+                xhr.addEventListener('load', function() {
+                    var uploadResult = document.getElementById('uploadResult');
+                    if (uploadResult) {
+                        uploadResult.style.color = 'green';
+                        uploadResult.innerText = "Файл успешно загружен!";
+                    }
+                    var progressBar = document.getElementById('progressBar');
+                    if (progressBar) {
+                        progressBar.style.display = 'none'; // Скрываем процессбар после загрузки
+                    }
+                });
+
+                xhr.addEventListener('error', function() {
+                    var uploadResult = document.getElementById('uploadResult');
+                    if (uploadResult) {
+                        uploadResult.innerText = "Произошла ошибка при загрузке файла.";
+                    }
+                    var progressBar = document.getElementById('progressBar');
+                    if (progressBar) {
+                        progressBar.style.display = 'none';
+                    }
+                });
+
+                xhr.open('post', uploadForm.action, true);
+                xhr.send(formData);
+            });
+        }
+
+        const uploadFormJQuery = $("#uploadForm");
+        if (uploadFormJQuery.length) {
+            uploadFormJQuery.submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: "post",
+                    url: "/api/uploadPost",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response !== "OK") {
+                            $("#uploadResult").html(response);
+                        } else {
+                            $("#uploadResult").html('<p class="text-success">Обновление успешно залито, подождите 30 секунд и можно будет заходить с лоадера!</p>');
+                        }
+                    }
+                });
+            });
+        }
+    });
+
+</script>
+<footer><div>
+
+<footer id="footer" class="footer">
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about" style="margin-top: 0px;">
+                <a href="/" class="d-flex align-items-center">
+
+                    <img src="img/logo.png" style="margin-left: -10px;" width="50px;">
+
+                    <span>Delta</span>
+                </a>
+                <div class="footer-contact">
+                    <p>Наш продукт не связан с MojangAB</p>
+                    <p>все средства идут на развитие проекта.</p>
+                    <p class="mt-3"><strong>Email: </strong><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e387868f9782808f8a868d97cd8d8697948c9188a3848e828a8fcd808c8e">[email&#160;protected]</a></span></p>
+                    <p>Тарасов Сергей Петрович | ИНН 713602155690</p>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><i class="bi bi-dot"></i> <a href="/">Главная</a></li>
+                     <li><i class="bi bi-dot"></i> <a href="/#faq">Товары</a></li>
+                     <li><i class="bi bi-dot"></i> <a href="/#alt-features">Наши качества</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Документы</h4>
+                <ul>
+                    <li><i class="bi bi-dot"></i> <a href="/eula">Пользовательское соглашение</a></li>
+                    <li><i class="bi bi-dot"></i> <a href="/privacy_policy">Обработка данных</a></li>
+                  </ul>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+                <h4>Наши социальные сети</h4>
+                <p>Здесь мы собрали все наши официальные социальные сети, мы будем очень рады вашей подписке.</p>
+                <div class="social-links d-flex">
+                    <a href="https://www.youtube.com/@dezz_kryt" target="_blank"><i class="bi bi-youtube"></i></a>
+                    <a href="https://t.me/dlcformine" target="_blank"><i class="bi bi-telegram"></i></a>
+                    <a href="https://dsc.gg/deltaclient" target="_blank"><i class="bi bi-discord"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <img src="img/logo.png" width="40px" style="margin: -5px"> <strong>Delta</strong ></p>
+    </div>
+
+</footer>
+</div></footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
