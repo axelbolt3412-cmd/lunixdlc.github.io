@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - Excellent Client</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Excellent Client">
+                    <span class="beta-tag">BETA</span>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" id="support-link" class="nav-link"><i class="fas fa-headset"></i> Поддержка</a></li>
+                    <li><a href="#" id="logout-btn" class="auth-btn"><i class="fas fa-sign-out-alt"></i> Выход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="avatar">
+                        <img src="images/default-avatar.png" alt="Avatar">
+                    </div>
+                    <h3 id="username">Пользователь</h3>
+                    <p class="uid">UID: <span id="user-uid">loading...</span></p>
+                </div>
+                <nav class="dashboard-nav">
+                    <ul>
+                        <li><a href="#" class="active" data-section="overview"><i class="fas fa-home"></i> Обзор</a></li>
+                        <li><a href="#" data-section="download"><i class="fas fa-download"></i> Скачать клиент</a></li>
+                        <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Настройки</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <section id="overview" class="dashboard-section active">
+                    <h2>Добро пожаловать, <span id="overview-username">Пользователь</span>!</h2>
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-day"></i>
+                            <div class="stat-info">
+                                <h4>Дата регистрации</h4>
+                                <p id="registration-date">loading...</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-info">
+                                <h4>Последний вход</h4>
+                                <p id="last-login">loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <h3>Быстрые действия</h3>
+                        <div class="action-buttons">
+                            <a href="#" class="action-btn" id="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать клиент</span>
+                            </a>
+                            <a href="https://t.me/blinchikbustit42" target="_blank" class="action-btn">
+                                <i class="fab fa-telegram"></i>
+                                <span>Telegram канал</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="download" class="dashboard-section">
+                    <h2>Скачать клиент</h2>
+                    <div class="download-box">
+                        <div class="download-info">
+                            <h3>Excellent Client v1.0.0</h3>
+                            <p>Последнее обновление: 01.05.2025</p>
+                            <ul class="version-features">
+                                <li><i class="fas fa-check"></i> Улучшенный интерфейс</li>
+                                <li><i class="fas fa-check"></i> Оптимизация производительности</li>
+                                <li><i class="fas fa-check"></i> Новые визуальные эффекты</li>
+                                <li><i class="fas fa-check"></i> Исправление ошибок</li>
+                            </ul>
+                        </div>
+                        <a href="#" class="download-now-btn">
+                            <i class="fas fa-download"></i> Скачать сейчас
+                        </a>
+                    </div>
+                    
+                    <div class="version-history">
+                        <h3>История версий</h3>
+                        <div class="version-item">
+                            <div class="version-header">
+                                <h4>v0.9.5</h4>
+                                <span>15.04.2025</span>
+                            </div>
+                            <p>Бета-версия с базовым функционалом и тестовыми возможностями.</p>
+                        </div>
+                        <div class="version-item">
+                            <div class="version-header">
+                                <h4>v0.9.0</h4>
+                                <span>01.04.2025</span>
+                            </div>
+                            <p>Первая публичная бета-версия клиента.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="settings" class="dashboard-section">
+                    <h2>Настройки профиля</h2>
+                    <form id="profile-settings-form">
+                        <div class="form-group">
+                            <label>Имя пользователя</label>
+                            <input type="text" id="settings-username" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="settings-email">
+                        </div>
+                        <div class="form-group">
+                            <label>Изменить пароль</label>
+                            <input type="password" placeholder="Текущий пароль">
+                            <input type="password" placeholder="Новый пароль">
+                            <input type="password" placeholder="Подтвердите новый пароль">
+                        </div>
+                        <button type="submit" class="save-btn">Сохранить изменения</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; Excellent Client, 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 
