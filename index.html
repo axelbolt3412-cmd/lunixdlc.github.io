@@ -1,1812 +1,306 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LunixDLC</title>
-    <style>
-        :root {
-            --gradient-color: linear-gradient(330deg, #6666FF 0%, #6666FF 100%);
-            --gradient-hover-color: linear-gradient(330deg, #6666FF 0%, #6666FF 100%);
-            --gradient-focus-color: linear-gradient(330deg, #6666FF 0%, #6666FF 100%);
-            --text-color: #ffffff;
-            --text-secondary: #b3b3b3;
-            --bg-color: #0a0a0a;
-            --bg-secondary: #1a1a1a;
-            --error-color: #ff4757;
-            --success-color: #2ed573;
-        }
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Excellent » Главная</title>
+  <link rel="icon" type="image/png" href="img/logo.png" />
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="vendor/aos/aos.css" rel="stylesheet">
+  <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link href="css/main.css" rel="stylesheet">
+   <meta charset="UTF-8">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://celka.su/storage/img/background.png') center/cover;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(153, 41, 234, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(88, 8, 251, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(153, 41, 234, 0.05) 0%, transparent 50%);
-            animation: pulse 20s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: var(--gradient-color);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .language-switch {
-            position: relative;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: var(--bg-secondary);
-            transition: all 0.3s ease;
-        }
-
-        .language-switch:hover {
-            background: var(--gradient-color);
-        }
-
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .language-switch:hover .language-dropdown {
-            max-height: 200px;
-        }
-
-        .language-option {
-            padding: 0.5rem 1rem;
-            transition: background 0.3s ease;
-        }
-
-        .language-option:hover {
-            background: rgba(153, 41, 234, 0.2);
-        }
-
-        .support-btn {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .support-btn:hover {
-            color: #6666FF;
-        }
-
-        .auth-btn {
-            padding: 0.5rem 1.5rem;
-            background: var(--gradient-color);
-            border: none;
-            border-radius: 25px;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .auth-btn:hover {
-            background: var(--gradient-hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(153, 41, 234, 0.4);
-        }
-
-        .user-info {
-            display: none;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .username-badge {
-            position: relative;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: var(--bg-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .username-badge:hover {
-            border: 2px solid;
-            border-image: var(--gradient-color) 1;
-            border-radius: 20px;
-            background: rgba(153, 41, 234, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(153, 41, 234, 0.3);
-        }
-
-        .logout-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid var(--text-secondary);
-            border-radius: 20px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            border-color: #ff4757;
-            color: #ff4757;
-        }
-
-        main {
-            margin-top: 80px;
-            padding: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Dashboard Styles */
-        .dashboard {
-            display: none;
-            padding: 2rem 0;
-        }
-
-        .dashboard.active {
-            display: block;
-        }
-
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .dashboard-title {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: var(--gradient-color);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .dashboard-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(153, 41, 234, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(153, 41, 234, 0.2);
-        }
-
-        .dashboard-card h3 {
-            color: #6666FF;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .dashboard-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .dashboard-info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(153, 41, 234, 0.1);
-        }
-
-        .dashboard-info-label {
-            color: var(--text-secondary);
-        }
-
-        .dashboard-info-value {
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .back-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--gradient-color);
-            border: none;
-            border-radius: 25px;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            margin-bottom: 2rem;
-        }
-
-        .back-btn:hover {
-            background: var(--gradient-hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(153, 41, 234, 0.4);
-        }
-
-        /* Auth Modal Styles */
-        .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .auth-modal.active {
-            display: flex;
-        }
-
-        .auth-container {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(153, 41, 234, 0.3);
-            position: relative;
-        }
-
-        .auth-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .auth-close:hover {
-            color: var(--text-color);
-        }
-
-        .auth-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            background: var(--gradient-color);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            padding: 1rem;
-            background: var(--bg-color);
-            border: 1px solid rgba(153, 41, 234, 0.3);
-            border-radius: 10px;
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6666FF;
-            box-shadow: 0 0 10px rgba(153, 41, 234, 0.3);
-        }
-
-        .form-error {
-            color: var(--error-color);
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-
-        .form-success {
-            color: var(--success-color);
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-
-        .auth-submit {
-            padding: 1rem;
-            background: var(--gradient-color);
-            border: none;
-            border-radius: 10px;
-            color: var(--text-color);
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .auth-submit:hover {
-            background: var(--gradient-hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(153, 41, 234, 0.4);
-        }
-
-        .auth-switch {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .auth-switch-link {
-            color: #6666FF;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .auth-switch-link:hover {
-            color: #6666FF;
-        }
-
-        .home-content {
-            display: block;
-        }
-
-        .home-content.hidden {
-            display: none;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: var(--gradient-color);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            padding: 1rem 2rem;
-            background: var(--gradient-color);
-            border: none;
-            border-radius: 30px;
-            color: var(--text-color);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background: var(--gradient-hover-color);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(153, 41, 234, 0.4);
-        }
-
-        .btn-secondary {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: 2px solid var(--text-secondary);
-            border-radius: 30px;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            border-color: #6666FF;
-            color: #6666FF;
-        }
-
-        .features {
-            margin: 4rem 0;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: var(--gradient-color);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .feature-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(153, 41, 234, 0.2);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(153, 41, 234, 0.2);
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #6666FF;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .stat-card {
-            background: var(--gradient-color);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            transform: rotate(-2deg);
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card:nth-child(even) {
-            transform: rotate(2deg);
-        }
-
-        .stat-card:hover {
-            transform: rotate(0deg) scale(1.05);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-
-        .stat-card:hover::before {
-            animation: shine 0.5s ease;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-        }
-
-        footer {
-            background: var(--bg-secondary);
-            margin-top: 4rem;
-            padding: 3rem 2rem 1rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #6666FF;
-        }
-
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #6666FF;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(153, 41, 234, 0.2);
-            color: var(--text-secondary);
-        }
-
-        .loading {
-            text-align: center;
-            color: var(--text-secondary);
-            padding: 2rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .spinner {
-            border: 2px solid var(--bg-secondary);
-            border-top: 2px solid #6666FF;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .api-status {
-            background: rgba(46, 213, 115, 0.1);
-            border: 1px solid #6666FF;
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 2rem 0;
-            color: #2ed573;
-            text-align: center;
-        }
-
-        .api-status.error {
-            background: rgba(255, 71, 87, 0.1);
-            border-color: #6666FF;
-            color: #6666FF;
-        }
-
-        .api-status h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            header {
-                padding: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .auth-container {
-                margin: 1rem;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">LunixDLC</div>
-            <div class="nav-links">
-                <div class="language-switch">
-                    <span>RU</span>
-                    <div class="language-dropdown">
-                        <div class="language-option">RU</div>
-                        <div class="language-option">EN</div>
-                        <div class="language-option">PL</div>
-                    </div>
-                </div>
-                <a href="https://dsc.gg/lunixdlc" class="support-btn">Поддержка</a>
-                <button class="auth-btn" id="authBtn">Авторизация</button>
-                <div class="user-info" id="userInfo">
-                    <div class="username-badge" id="usernameBadge">
-                        <span id="username"></span>
-                    </div>
-                    <button class="logout-btn" id="logoutBtn">Выйти</button>
-                </div>
-            </div>
+
+<body class="index-page">
+
+<header><div>
+
+<header id="header" class="header d-flex align-items-center fixed-top ">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <img src="img/logo.png" alt="">
+            <h1>Excellent</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="index.html#hero">Главная<br></a></li>
+                <li><a href="index.html#footer">Документы</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-    </header>
 
-    <!-- Auth Modal -->
-    <div class="auth-modal" id="authModal">
-        <div class="auth-container">
-            <button class="auth-close" id="authClose">&times;</button>
-            
-            <!-- Login Form -->
-            <div id="loginForm" class="auth-form-container">
-                <h2 class="auth-title">Вход</h2>
-                <form class="auth-form" id="loginFormElement">
-                    <div class="form-group">
-                        <label class="form-label">Имя пользователя</label>
-                        <input type="text" class="form-input" id="loginUsername" required>
-                        <div class="form-error" id="loginUsernameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" id="loginPassword" required>
-                        <div class="form-error" id="loginPasswordError"></div>
-                    </div>
-                    <button type="submit" class="auth-submit">
-                        <span class="spinner" id="loginSpinner" style="display: none;"></span>
-                        Войти
-                    </button>
-                    <div class="form-error" id="loginError"></div>
-                    <div class="form-success" id="loginSuccess"></div>
-                </form>
-                <div class="auth-switch">
-                    Нет аккаунта? <span class="auth-switch-link" id="showRegister">Зарегистрироваться</span>
+
+        
+
+        <a class="btn-getstarted flex-md-shrink-0" style="margin-left: 30px;" href="cabinet.html">Войти</a>
+
+    </div>
+</header>
+</div></header>
+
+<main class="main">
+
+  <section id="hero" class="hero section">
+
+    <div class="container">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5" data-aos="zoom-out">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+          <h3 class="display-6 fw-bold lh-1 mb-3">Ваш лучший клиент для Minecraft. (DLC)</h3>
+          <p class="lead" style="font-size: 16px;">Играйте без лишних забот, наслаждаясь каждой минутой, ведь наш клиент создан специально для вашего комфорта и удовольствия. Он оптимизирован для максимально приятного и удобного игрового процесса, чтобы вы могли полностью погрузиться в мир Minecraft.</p>
+          <div class="d-flex flex-column flex-md-row" data-aos="fade-up" data-aos-delay="200">
+            <a href="cabinet.html" class="btn-get-started">Купить<i class="bi bi-arrow-right"></i></a>
+            <a href="https://www.youtube.com/watch?v=PivI6E8clvA" class="glightbox btn-watch-video d-flex align-items-center justify-content-center ms-0 ms-md-4 mt-4 mt-md-0"><i class="bi bi-play"></i><span>Краткий обзор</span></a>
+          </div>
+        </div>
+        <div class="col-10 col-sm-8 col-lg-6 d-none d-md-block">
+          <img src="img/logo.png" class="d-block mx-lg-auto img-fluid animated" loading="lazy" width="400">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+
+  <section id="alt-features" class="alt-features section">
+
+    <div class="container">
+
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Наши преимущества</h2>
+        <p>Здесь кратко описаны наши преимущества<br></p>
+      </div>
+
+
+      <div class="row gy-5">
+
+        <div  data-aos="fade-up" data-aos-delay="200">
+
+          <div class="row align-self-center gy-5">
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-download"></i>
+              <div>
+                <h4>Простая установка</h4>
+                <p>Мы даем полный пакет инструкций для установки нашего клиента</p>
+              </div>
+            </div><!-- End Feature Item -->
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-terminal"></i>
+              <div>
+                <h4>Интерактивность</h4>
+                <p>Клиент можно использовать везде, ведь благодаря обширности его настроек, вы можете играть как угодно, и где угодно</p>
+              </div>
+            </div><!-- End Feature Item -->
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-shield"></i>
+              <div>
+                <h4>Надёжность</h4>
+                <p>Наш клиент максимально защищён от взломов, кряков, а так же постоянно обновляется</p>
+              </div>
+            </div><!-- End Feature Item -->
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-flash"></i>
+              <div>
+                <h4>Оптимизация</h4>
+                <p>Продукт который мы создаем, максимально оптимизирован, и этому есть доказательства в виде тысяч положительных отзывов от юзеров</p>
+              </div>
+            </div><!-- End Feature Item -->
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-star"></i>
+              <div>
+                <h4>Удобство и практичность</h4>
+                <p>Наш клиент очень прост и удобен в настройке, всего пару кликов и можешь отправляться играть</p>
+              </div>
+            </div><!-- End Feature Item -->
+
+            <div class="col-md-6 icon-box">
+              <i class="fa fa-file-image-o" aria-hidden="true"></i>
+              <div>
+                <h4>Визуальная составляющая</h4>
+                <p>Наш клиент полон разных насыщенных и красивых визуалов, которые каждый раз радуют глаз как при первом запуске</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="faq" class="faq section">
+
+    <div class="container section-title" data-aos="fade-up">
+      <h2>F.A.Q</h2>
+      <p>Часто задаваемые вопросы</p>
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="faq-container">
+
+            <div class="faq-item">
+              <h3>Как быстро я получу свою подписку и смогу играть?</h3>
+              <div class="faq-content">
+                <p>После оплаты вы автоматически получаете доступ и можно уже сразу играть.</p>
+              </div>
+              <i class="faq-toggle bi bi-chevron-right"></i>
+            </div>
+
+            <div class="faq-item">
+              <h3>Какие проекты поддерживает ваш клиент?</h3>
+              <div class="faq-content">
+                <p>Мы сейчас стараемся поддерживать все проекты но в частности это FunTime, HollyWorld, ReallyWorld! Хотим отметить что наш клиент подходит и на другие сервера.</p>
+              </div>
+              <i class="faq-toggle bi bi-chevron-right"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="faq-container">
+
+            <div class="faq-item">
+              <h3>Оплата происходит единоразово?</h3>
+              <div class="faq-content">
+                <p>Да, оплата происходит одним платежом, вы получаете конкретное количество дней игры сколько вы и выбирали. Доплачивать ничего не нужно.</p>
+              </div>
+              <i class="faq-toggle bi bi-chevron-right"></i>
+            </div>
+
+            <div class="faq-item">
+              <h3>Где находится поддержка?</h3>
+              <div class="faq-content">
+                <p>Вся поддержка осуществляется на нашем сервере Discord.</p>
+              </div>
+              <i class="faq-toggle bi bi-chevron-right"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer><div>
+
+<footer id="footer" class="footer">
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+                <a href="index.html" class="d-flex align-items-center">
+
+                    <!--<img src="img/logo.png"class="px-2" alt="" width="50px;"!-->
+
+                    <span>Excellent</span>
+                </a>
+                <div class="footer-contact pt-3">
+                    <p>Наш продукт не связан с MojangAB</p>
+                    <p>все средства идут на развитие проекта.</p>
+                    <p class="mt-3"><strong>Email: </strong><span><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="9ffae7fcfaf3f3faf1ebfcf3f6faf1ebb1f1faebe8f0edf4dff8f2fef6f3b1fcf0f2">[email&#160;protected]</a></span></p>
+                    <p>Тарасов Сергей Петрович | ИНН 713602155690</p>
                 </div>
             </div>
 
-            <!-- Register Form -->
-            <div id="registerForm" class="auth-form-container" style="display: none;">
-                <h2 class="auth-title">Регистрация</h2>
-                <form class="auth-form" id="registerFormElement">
-                    <div class="form-group">
-                        <label class="form-label">Имя пользователя</label>
-                        <input type="text" class="form-input" id="registerUsername" required>
-                        <div class="form-error" id="registerUsernameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="registerEmail" required>
-                        <div class="form-error" id="registerEmailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" id="registerPassword" required>
-                        <div class="form-error" id="registerPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Повторите пароль</label>
-                        <input type="password" class="form-input" id="registerConfirmPassword" required>
-                        <div class="form-error" id="registerConfirmPasswordError"></div>
-                    </div>
-                    <button type="submit" class="auth-submit">
-                        <span class="spinner" id="registerSpinner" style="display: none;"></span>
-                        Зарегистрироваться
-                    </button>
-                    <div class="form-error" id="registerError"></div>
-                    <div class="form-success" id="registerSuccess"></div>
-                </form>
-                <div class="auth-switch">
-                    Уже есть аккаунт? <span class="auth-switch-link" id="showLogin">Войти</span>
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><i class="bi bi-chevron-right"></i> <a href="index.html">Главная</a></li>
+                     <li><i class="bi bi-chevron-right"></i> <a href="index.html#faq">Вопросы</a></li>
+                     <li><i class="bi bi-chevron-right"></i> <a href="index.html#alt-features">Наши качества</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Документы</h4>
+                <ul>
+                    <li><i class="bi bi-chevron-right"></i> <a href="eula.html">Пользовательское соглашение</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="privacy_policy.html">Обработка данных</a></li>
+                  </ul>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+                <h4>Наши социальные сети</h4>
+                <p>Здесь мы собрали все наши официальные социальные сети, мы будем очень рады вашей подписке.</p>
+                <div class="social-links d-flex">
+                    <a href="https://www.youtube.com/@luvbeeq" target="_blank"><i class="bi bi-youtube"></i></a>
+                    <a href="https://t.me/excellent_recode" target="_blank"><i class="bi bi-telegram"></i></a>
+                    <a href="https://discord.gg/excellentrecode" target="_blank"><i class="bi bi-discord"></i></a>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <main>
 
-        <!-- Dashboard -->
-        <section class="dashboard" id="dashboard">
-            <button class="back-btn" id="backBtn">← На главную</button>
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Личный кабинет</h1>
-            </div>
-            
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <h3>Информация о профиле</h3>
-                    <div class="dashboard-info">
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Имя пользователя:</span>
-                            <span class="dashboard-info-value" id="dashboardUsername">-</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Email:</span>
-                            <span class="dashboard-info-value" id="dashboardEmail">-</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">UID:</span>
-                            <span class="dashboard-info-value" id="dashboardUID">-</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Дата регистрации:</span>
-                            <span class="dashboard-info-value" id="dashboardRegDate">-</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Excellent</strong><span>          -> All Rights Reserved</span></p>
+    </div>
 
-                <div class="dashboard-card">
-                    <h3>Статистика аккаунта</h3>
-                    <div class="dashboard-info">
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Статус:</span>
-                            <span class="dashboard-info-value" style="color: var(--success-color);">Активен</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Тип аккаунта:</span>
-                            <span class="dashboard-info-value">Базовый</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Последний вход:</span>
-                            <span class="dashboard-info-value" id="dashboardLastLogin">-</span>
-                        </div>
-                    </div>
-                </div>
+</footer>
+</div></footer>
 
-                <div class="dashboard-card">
-                    <h3>LunixDLC</h3>
-                    <div class="dashboard-info">
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Версия клиента:</span>
-                            <span class="dashboard-info-value">v1.01</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Лицензия:</span>
-                            <span class="dashboard-info-value" style="color: var(--error-color);">Не активна</span>
-                        </div>
-                        <div class="dashboard-info-item">
-                            <span class="dashboard-info-label">Подписка:</span>
-                            <span class="dashboard-info-value">-</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+ <a href="index.html#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/php-email-form/validate.js"></script>
+<script src="vendor/aos/aos.js"></script>
+<script src="vendor/glightbox/js/glightbox.min.js"></script>
+<script src="vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="vendor/swiper/swiper-bundle.min.js"></script>
 
-        <!-- Home Content -->
-        <div class="home-content" id="homeContent">
-            <section class="hero">
-                <h1>Lunix</h1>
-                <p>Мы предоставляем вам лучший клиент для комфортной игры, который даст вам наилучшие впечатления от игры.</p>
-                <div class="cta-buttons">
-                    <a href="https://dsc.gg/lunixdlc" class="btn-primary">Скачать</a>
-                    <button class="btn-secondary">Подробнее</button>
-                </div>
-            </section>
+<script>
 
-            <section class="features">
-                <h2>Наши преимущества</h2>
-                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">
-                    Мы кратко изложили вам то, что вы гарантированно получите после скачки нашего клиента.
-                </p>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Красивый внешний вид</h3>
-                        <p>В нашем клиенте присутствует большое количество визуальных функций, которые сделают вашу игру более красочной. А так же вы можете настроить оформление клиента под себя, сделав его по настоящему красивым.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Настраиваемость</h3>
-                        <p>В нашем клиенте вы можете настроить практически любую функцию под себя, а так же использовать конфигурации других пользователей. Благодаря этому вы сможете использовать наш клиент на максимуме его возможностей.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Оптимизация</h3>
-                        <p>Мы постоянно улучшаем оптимизацию нашего клиента и самой игры. Благодаря этому вы сможете запустить наш клиент даже на слабых компьютерах.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Частые обновления</h3>
-                        <p>Мы регулярно обновляем функционал в нашем клиенте, добавляя новые функции, а так же совершенствуя уже существующие. Благодаря этому наш клиент имеет преимущества под все существующие сервера.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Лучшая поддержка</h3>
-                        <p>У нас самая лучшая поддержка, которая разбирается в своём деле и сможет помочь вам по любому вопросу связанному с нашим клиентом.</p>
-                    </div>
-                </div>
+  document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && (event.key === 's' || event.key === 'S')) {
+      event.preventDefault();
+     }
+  });
 
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="999">0</div>
-                        <div class="stat-label">Пользователей</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="999">0</div>
-                        <div class="stat-label">Запусков</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="999">0</div>
-                        <div class="stat-label">Обновлений</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="999">0</div>
-                        <div class="stat-label">Разработчиков</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
+  document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+   });
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>LunixDLC</h3>
-                <p style="color: var(--text-secondary);">Лучший клиент для комфортной игры</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Навигация</h3>
-                <a href="#home">Главная</a>
-                <a href="#buy">Скачать</a>
-                <a href="https://t.me/krendelprosto">Поддержка</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Документы</h3>
-                <a href="#">Обработка персональных данных</a>
-                <a href="#">Пользовательское соглашение</a>
-                <a href="#">Правила пользования</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Контакты</h3>
-                <p style="color: var(--text-secondary);">Почта для связи: <a href="mailto:XpClient@mail.ru" style="display: inline; color: #9929ea;">lunixproject@gmail.com</a></p>
-                <p style="color: var(--text-secondary);">ПН-ПТ 11:00-19:00 МСК</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>Copyright © LunixDLC 2025</p>
-        </div>
-    </footer>
 
-    <script>
-        // Configuration - ЗАМЕНИТЕ НА ВАШ URL ОТ MOCKAPI
-        const CONFIG = {
-            API_BASE_URL: 'https://XXXXXXXXXXX.mockapi.io', // ЗАМЕНИТЕ!
-            USERS_ENDPOINT: '/users'
-        };
+</script>
 
-        // User data management with MockAPI
-        class UserManager {
-            constructor() {
-                this.currentUser = null;
-                this.init();
-            }
+<script src="js/main.js"></script>
 
-            async init() {
-                this.loadCurrentUserFromStorage();
-                this.updateUI();
-                await this.checkApiConnection();
-            }
-
-
-            // Загрузка текущего пользователя из localStorage
-            loadCurrentUserFromStorage() {
-                try {
-                    const currentUser = localStorage.getItem('xpclient_current_user');
-                    if (currentUser) {
-                        this.currentUser = JSON.parse(currentUser);
-                        console.log('Текущий пользователь восстановлен:', this.currentUser);
-                    }
-                } catch (error) {
-                    console.error('Ошибка загрузки пользователя из localStorage:', error);
-                    this.currentUser = null;
-                }
-            }
-
-            // Сохранение текущего пользователя в localStorage
-            saveCurrentUserToStorage() {
-                try {
-                    if (this.currentUser) {
-                        localStorage.setItem('lunixclient_current_user', JSON.stringify(this.currentUser));
-                    } else {
-                        localStorage.removeItem('lunixclient_current_user');
-                    }
-                } catch (error) {
-                    console.error('Ошибка сохранения пользователя в localStorage:', error);
-                }
-            }
-
-            // Проверка существования пользователя по username
-            async checkUserExists(username) {
-                try {
-                    const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.USERS_ENDPOINT}?username=${encodeURIComponent(username)}`);
-                    const users = await response.json();
-                    return users.length > 0 ? users[0] : null;
-                } catch (error) {
-                    console.error('Ошибка проверки пользователя:', error);
-                    throw new Error('Ошибка соединения с сервером');
-                }
-            }
-
-            // Проверка существования пользователя по email
-            async checkEmailExists(email) {
-                try {
-                    const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.USERS_ENDPOINT}?email=${encodeURIComponent(email)}`);
-                    const users = await response.json();
-                    return users.length > 0;
-                } catch (error) {
-                    console.error('Ошибка проверки email:', error);
-                    throw new Error('Ошибка соединения с сервером');
-                }
-            }
-
-            // Регистрация нового пользователя
-            async register(username, email, password) {
-                console.log('Регистрация пользователя:', username);
-
-                // Проверяем существование пользователя
-                const existingUser = await this.checkUserExists(username);
-                if (existingUser) {
-                    throw new Error('Пользователь с таким именем уже существует');
-                }
-
-                const emailExists = await this.checkEmailExists(email);
-                if (emailExists) {
-                    throw new Error('Пользователь с такой почтой уже существует');
-                }
-
-                // Создаем нового пользователя
-                const newUser = {
-                    username,
-                    email,
-                    password,
-                    registrationDate: new Date().toISOString(),
-                    lastLogin: new Date().toISOString(),
-                    status: 'active',
-                    accountType: 'basic'
-                };
-
-                try {
-                    const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.USERS_ENDPOINT}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(newUser)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-
-                    const createdUser = await response.json();
-                    console.log('Пользователь создан:', createdUser);
-
-                    return {
-                        id: createdUser.id,
-                        username: createdUser.username,
-                        email: createdUser.email,
-                        registrationDate: createdUser.registrationDate
-                    };
-                } catch (error) {
-                    console.error('Ошибка создания пользователя:', error);
-                    throw new Error('Ошибка сохранения данных на сервере');
-                }
-            }
-
-            // Вход пользователя
-            async login(username, password) {
-                console.log('Вход пользователя:', username);
-
-                const user = await this.checkUserExists(username);
-                if (!user) {
-                    throw new Error('Пользователь не найден');
-                }
-
-                if (user.password !== password) {
-                    throw new Error('Неверный пароль');
-                }
-
-                // Обновляем время последнего входа
-                const updatedUser = {
-                    ...user,
-                    lastLogin: new Date().toISOString()
-                };
-
-                try {
-                    const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.USERS_ENDPOINT}/${user.id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(updatedUser)
-                    });
-
-                    if (response.ok) {
-                        const updated = await response.json();
-                        this.currentUser = {
-                            id: updated.id,
-                            username: updated.username,
-                            email: updated.email,
-                            registrationDate: updated.registrationDate,
-                            lastLogin: updated.lastLogin,
-                            status: updated.status || 'active',
-                            accountType: updated.accountType || 'basic'
-                        };
-                    } else {
-                        // Если обновление не удалось, используем старые данные
-                        this.currentUser = {
-                            id: user.id,
-                            username: user.username,
-                            email: user.email,
-                            registrationDate: user.registrationDate,
-                            lastLogin: user.lastLogin,
-                            status: user.status || 'active',
-                            accountType: user.accountType || 'basic'
-                        };
-                    }
-
-                    this.saveCurrentUserToStorage();
-                    console.log('Пользователь вошел:', this.currentUser);
-                    return this.currentUser;
-
-                } catch (error) {
-                    console.error('Ошибка обновления времени входа:', error);
-                    // Все равно логиним пользователя
-                    this.currentUser = {
-                        id: user.id,
-                        username: user.username,
-                        email: user.email,
-                        registrationDate: user.registrationDate,
-                        lastLogin: user.lastLogin,
-                        status: user.status || 'active',
-                        accountType: user.accountType || 'basic'
-                    };
-                    this.saveCurrentUserToStorage();
-                    return this.currentUser;
-                }
-            }
-
-            // Выход пользователя
-            logout() {
-                console.log('Выход пользователя');
-                this.currentUser = null;
-                this.saveCurrentUserToStorage();
-            }
-
-            // Обновление UI
-            updateUI() {
-                const authBtn = document.getElementById('authBtn');
-                const userInfo = document.getElementById('userInfo');
-                const usernameSpan = document.getElementById('username');
-
-                if (this.currentUser) {
-                    authBtn.style.display = 'none';
-                    userInfo.style.display = 'flex';
-                    usernameSpan.textContent = this.currentUser.username;
-                } else {
-                    authBtn.style.display = 'block';
-                    userInfo.style.display = 'none';
-                }
-            }
-
-            // Обновление дашборда
-            updateDashboard() {
-                if (this.currentUser) {
-                    document.getElementById('dashboardUsername').textContent = this.currentUser.username;
-                    document.getElementById('dashboardEmail').textContent = this.currentUser.email;
-                    document.getElementById('dashboardUID').textContent = this.currentUser.id;
-                    document.getElementById('dashboardRegDate').textContent = new Date(this.currentUser.registrationDate).toLocaleString('ru-RU');
-                    document.getElementById('dashboardLastLogin').textContent = new Date(this.currentUser.lastLogin).toLocaleString('ru-RU');
-                }
-            }
-        }
-
-        // Page navigation
-        class PageManager {
-            constructor() {
-                this.homeContent = document.getElementById('homeContent');
-                this.dashboard = document.getElementById('dashboard');
-                this.currentPage = 'home';
-            }
-
-            showHome() {
-                this.homeContent.classList.remove('hidden');
-                this.dashboard.classList.remove('active');
-                this.currentPage = 'home';
-            }
-
-            showDashboard() {
-                this.homeContent.classList.add('hidden');
-                this.dashboard.classList.add('active');
-                this.currentPage = 'dashboard';
-                userManager.updateDashboard();
-            }
-        }
-
-        // Auth modal management
-        class AuthModal {
-            constructor(userManager) {
-                this.userManager = userManager;
-                this.modal = document.getElementById('authModal');
-                this.loginForm = document.getElementById('loginForm');
-                this.registerForm = document.getElementById('registerForm');
-                this.init();
-            }
-
-            init() {
-                document.getElementById('authBtn').addEventListener('click', () => this.show());
-                document.getElementById('authClose').addEventListener('click', () => this.hide());
-                document.getElementById('showRegister').addEventListener('click', () => this.showRegister());
-                document.getElementById('showLogin').addEventListener('click', () => this.showLogin());
-                document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
-                document.getElementById('usernameBadge').addEventListener('click', () => this.goToDashboard());
-
-                document.getElementById('loginFormElement').addEventListener('submit', (e) => this.handleLogin(e));
-                document.getElementById('registerFormElement').addEventListener('submit', (e) => this.handleRegister(e));
-
-                this.modal.addEventListener('click', (e) => {
-                    if (e.target === this.modal) {
-                        this.hide();
-                    }
-                });
-            }
-
-            show() {
-                this.modal.classList.add('active');
-                this.showLogin();
-                this.clearErrors();
-            }
-
-            hide() {
-                this.modal.classList.remove('active');
-                this.clearErrors();
-                this.clearForms();
-            }
-
-            showLogin() {
-                this.loginForm.style.display = 'block';
-                this.registerForm.style.display = 'none';
-                this.clearErrors();
-            }
-
-            showRegister() {
-                this.loginForm.style.display = 'none';
-                this.registerForm.style.display = 'block';
-                this.clearErrors();
-            }
-
-            clearErrors() {
-                const errorElements = document.querySelectorAll('.form-error, .form-success');
-                errorElements.forEach(el => el.textContent = '');
-            }
-
-            clearForms() {
-                document.getElementById('loginFormElement').reset();
-                document.getElementById('registerFormElement').reset();
-            }
-
-            showError(elementId, message) {
-                document.getElementById(elementId).textContent = message;
-            }
-
-            showSuccess(elementId, message) {
-                document.getElementById(elementId).textContent = message;
-            }
-
-            validateEmail(email) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(email);
-            }
-
-            validatePassword(password) {
-                return password.length >= 6;
-            }
-
-            validateUsername(username) {
-                return username.length >= 3 && /^[a-zA-Z0-9_]+$/.test(username);
-            }
-
-            showSpinner(spinnerId, show) {
-                const spinner = document.getElementById(spinnerId);
-                spinner.style.display = show ? 'inline-block' : 'none';
-            }
-
-            async handleLogin(e) {
-                e.preventDefault();
-                this.clearErrors();
-
-                const username = document.getElementById('loginUsername').value.trim();
-                const password = document.getElementById('loginPassword').value;
-
-                if (!username) {
-                    this.showError('loginUsernameError', 'Введите имя пользователя');
-                    return;
-                }
-
-                if (!password) {
-                    this.showError('loginPasswordError', 'Введите пароль');
-                    return;
-                }
-
-                this.showSpinner('loginSpinner', true);
-
-                try {
-                    await this.userManager.login(username, password);
-                    this.showSuccess('loginSuccess', 'Успешный вход!');
-                    setTimeout(() => {
-                        this.hide();
-                        this.userManager.updateUI();
-                        pageManager.showDashboard();
-                    }, 1000);
-                } catch (error) {
-                    this.showError('loginError', error.message);
-                } finally {
-                    this.showSpinner('loginSpinner', false);
-                }
-            }
-
-            async handleRegister(e) {
-                e.preventDefault();
-                this.clearErrors();
-
-                const username = document.getElementById('registerUsername').value.trim();
-                const email = document.getElementById('registerEmail').value.trim();
-                const password = document.getElementById('registerPassword').value;
-                const confirmPassword = document.getElementById('registerConfirmPassword').value;
-
-                let hasError = false;
-
-                if (!username) {
-                    this.showError('registerUsernameError', 'Введите имя пользователя');
-                    hasError = true;
-                } else if (!this.validateUsername(username)) {
-                    this.showError('registerUsernameError', 'Имя пользователя должно содержать минимум 3 символа и только буквы, цифры и _');
-                    hasError = true;
-                }
-
-                if (!email) {
-                    this.showError('registerEmailError', 'Введите email');
-                    hasError = true;
-                } else if (!this.validateEmail(email)) {
-                    this.showError('registerEmailError', 'Введите корректный email');
-                    hasError = true;
-                }
-
-                if (!password) {
-                    this.showError('registerPasswordError', 'Введите пароль');
-                    hasError = true;
-                } else if (!this.validatePassword(password)) {
-                    this.showError('registerPasswordError', 'Пароль должен содержать минимум 6 символов');
-                    hasError = true;
-                }
-
-                if (!confirmPassword) {
-                    this.showError('registerConfirmPasswordError', 'Повторите пароль');
-                    hasError = true;
-                } else if (password !== confirmPassword) {
-                    this.showError('registerConfirmPasswordError', 'Пароли не совпадают');
-                    hasError = true;
-                }
-
-                if (hasError) return;
-
-                this.showSpinner('registerSpinner', true);
-
-                try {
-                    await this.userManager.register(username, email, password);
-                    this.showSuccess('registerSuccess', 'Регистрация успешна! Теперь вы можете войти.');
-                    setTimeout(() => {
-                        this.showLogin();
-                        document.getElementById('loginUsername').value = username;
-                    }, 1500);
-                } catch (error) {
-                    this.showError('registerError', error.message);
-                } finally {
-                    this.showSpinner('registerSpinner', false);
-                }
-            }
-
-            logout() {
-                this.userManager.logout();
-                this.userManager.updateUI();
-                pageManager.showHome();
-            }
-
-            goToDashboard() {
-                pageManager.showDashboard();
-            }
-        }
-
-        // Global variables
-        let userManager;
-        let authModal;
-        let pageManager;
-
-        // Initialize application
-        document.addEventListener('DOMContentLoaded', function() {
-            pageManager = new PageManager();
-            userManager = new UserManager();
-            authModal = new AuthModal(userManager);
-
-            document.getElementById('backBtn').addEventListener('click', () => {
-                pageManager.showHome();
-            });
-
-            // Анимация счетчиков
-            const observerOptions = {
-                threshold: 0.7
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        animateCounter(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.stat-card').forEach(card => {
-                observer.observe(card);
-            });
-
-            function animateCounter(element) {
-                const counter = element.querySelector('.stat-number');
-                const target = parseInt(counter.dataset.target);
-                const increment = target / 100;
-                let current = 0;
-
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.floor(current).toLocaleString();
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target.toLocaleString();
-                    }
-                };
-
-                updateCounter();
-            }
-
-            // Плавная прокрутка
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
-            console.log('XPClient с MockAPI инициализирован!');
-            console.log('Не забудьте заменить API_BASE_URL на ваш MockAPI проект');
-        });
-    </script>
-    // Добавьте этот код перед закрывающим тегом </script>
-
-// Система переводов
-const translations = {
-    'RU': {
-        // Заголовки
-        'heroTitle': 'Lunix',
-        'heroText': 'Мы предоставляем вам лучший клиент для комфортной игры, который даст вам наилучшие впечатления от игры.',
-        'featuresTitle': 'Наши преимущества',
-        'featuresSubtitle': 'Мы кратко изложили вам то, что вы гарантированно получите после скачки нашего клиента.',
-        
-        // Кнопки
-        'downloadBtn': 'Скачать',
-        'moreInfoBtn': 'Подробнее',
-        'supportLink': 'Поддержка',
-        'authBtn': 'Авторизация',
-        'logoutBtn': 'Выйти',
-        'backBtn': '← На главную',
-        'dashboardTitle': 'Личный кабинет',
-        
-        // Особенности
-        'feature1Title': 'Красивый внешний вид',
-        'feature1Text': 'В нашем клиенте присутствует большое количество визуальных функций, которые сделают вашу игру более красочной.',
-        
-        'feature2Title': 'Настраиваемость',
-        'feature2Text': 'В нашем клиенте вы можете настроить практически любую функцию под себя.',
-        
-        'feature3Title': 'Оптимизация',
-        'feature3Text': 'Мы постоянно улучшаем оптимизацию нашего клиента и самой игры.',
-        
-        'feature4Title': 'Частые обновления',
-        'feature4Text': 'Мы регулярно обновляем функционал в нашем клиенте, добавляя новые функции.',
-        
-        'feature5Title': 'Лучшая поддержка',
-        'feature5Text': 'У нас самая лучшая поддержка, которая разбирается в своём деле.',
-        
-        // Футер
-        'footerTitle': 'LunixDLC',
-        'footerSubtitle': 'Лучший клиент для комфортной игры',
-        'nav1': 'Главная',
-        'nav2': 'Скачать',
-        'nav3': 'Поддержка',
-        'docs1': 'Обработка персональных данных',
-        'docs2': 'Пользовательское соглашение',
-        'docs3': 'Правила пользования',
-        'contacts': 'Контакты',
-        'copyright': 'Copyright © LunixDLC 2025',
-        
-        // Авторизация
-        'loginTitle': 'Вход',
-        'registerTitle': 'Регистрация',
-        'usernameLabel': 'Имя пользователя',
-        'emailLabel': 'Email',
-        'passwordLabel': 'Пароль',
-        'confirmPasswordLabel': 'Повторите пароль',
-        'loginBtn': 'Войти',
-        'registerBtn': 'Зарегистрироваться',
-        'noAccount': 'Нет аккаунта?',
-        'haveAccount': 'Уже есть аккаунт?',
-        'signUp': 'Зарегистрироваться',
-        'signIn': 'Войти'
-    },
-    'EN': {
-        'heroTitle': 'Lunix',
-        'heroText': 'We provide you with the best client for comfortable gaming that will give you the best gaming experience.',
-        'featuresTitle': 'Our Advantages',
-        'featuresSubtitle': 'We have briefly outlined what you will definitely get after downloading our client.',
-        
-        'downloadBtn': 'Download',
-        'moreInfoBtn': 'More info',
-        'supportLink': 'Support',
-        'authBtn': 'Authorization',
-        'logoutBtn': 'Logout',
-        'backBtn': '← Back to home',
-        'dashboardTitle': 'Dashboard',
-        
-        'feature1Title': 'Beautiful design',
-        'feature1Text': 'Our client has a lot of visual features that will make your game more colorful.',
-        
-        'feature2Title': 'Customizability',
-        'feature2Text': 'In our client you can customize almost any feature to your liking.',
-        
-        'feature3Title': 'Optimization',
-        'feature3Text': 'We constantly improve the optimization of our client and the game itself.',
-        
-        'feature4Title': 'Frequent updates',
-        'feature4Text': 'We regularly update the functionality in our client, adding new features.',
-        
-        'feature5Title': 'Best support',
-        'feature5Text': 'We have the best support team that knows their business.',
-        
-        'footerTitle': 'LunixDLC',
-        'footerSubtitle': 'The best client for comfortable gaming',
-        'nav1': 'Home',
-        'nav2': 'Download',
-        'nav3': 'Support',
-        'docs1': 'Privacy Policy',
-        'docs2': 'Terms of Service',
-        'docs3': 'Usage Rules',
-        'contacts': 'Contacts',
-        'copyright': 'Copyright © LunixDLC 2025',
-        
-        'loginTitle': 'Login',
-        'registerTitle': 'Register',
-        'usernameLabel': 'Username',
-        'emailLabel': 'Email',
-        'passwordLabel': 'Password',
-        'confirmPasswordLabel': 'Confirm password',
-        'loginBtn': 'Login',
-        'registerBtn': 'Register',
-        'noAccount': 'No account?',
-        'haveAccount': 'Already have an account?',
-        'signUp': 'Sign up',
-        'signIn': 'Sign in'
-    },
-    'PL': {
-        'heroTitle': 'Lunix',
-        'heroText': 'Zapewniamy Ci najlepszego klienta do komfortowej gry, który zapewni Ci najlepsze wrażenia z gry.',
-        'featuresTitle': 'Nasze zalety',
-        'featuresSubtitle': 'W skrócie przedstawiliśmy to, co na pewno otrzymasz po pobraniu naszego klienta.',
-        
-        'downloadBtn': 'Pobierz',
-        'moreInfoBtn': 'Więcej',
-        'supportLink': 'Wsparcie',
-        'authBtn': 'Autoryzacja',
-        'logoutBtn': 'Wyloguj',
-        'backBtn': '← Wróć do strony głównej',
-        'dashboardTitle': 'Panel użytkownika',
-        
-        'feature1Title': 'Piękny wygląd',
-        'feature1Text': 'Nasz klient posiada wiele funkcji wizualnych, które uczynią Twoją grę bardziej kolorową.',
-        
-        'feature2Title': 'Konfigurowalność',
-        'feature2Text': 'W naszym kliencie możesz dostosować prawie każdą funkcję do swoich potrzeb.',
-        
-        'feature3Title': 'Optymalizacja',
-        'feature3Text': 'Stale poprawiamy optymalizację naszego klienta i samej gry.',
-        
-        'feature4Title': 'Częste aktualizacje',
-        'feature4Text': 'Regularnie aktualizujemy funkcjonalność w naszym kliencie, dodając nowe funkcje.',
-        
-        'feature5Title': 'Najlepsze wsparcie',
-        'feature5Text': 'Mamy najlepszy zespół wsparcia, który zna się na rzeczy.',
-        
-        'footerTitle': 'LunixDLC',
-        'footerSubtitle': 'Najlepszy klient do komfortowej gry',
-        'nav1': 'Strona główna',
-        'nav2': 'Pobierz',
-        'nav3': 'Wsparcie',
-        'docs1': 'Polityka prywatności',
-        'docs2': 'Regulamin',
-        'docs3': 'Zasady użytkowania',
-        'contacts': 'Kontakt',
-        'copyright': 'Copyright © LunixDLC 2025',
-        
-        'loginTitle': 'Logowanie',
-        'registerTitle': 'Rejestracja',
-        'usernameLabel': 'Nazwa użytkownika',
-        'emailLabel': 'Email',
-        'passwordLabel': 'Hasło',
-        'confirmPasswordLabel': 'Potwierdź hasło',
-        'loginBtn': 'Zaloguj',
-        'registerBtn': 'Zarejestruj',
-        'noAccount': 'Nie masz konta?',
-        'haveAccount': 'Masz już konto?',
-        'signUp': 'Zarejestruj się',
-        'signIn': 'Zaloguj się'
-    }
-};
-
-// Текущий язык (по умолчанию русский)
-let currentLanguage = 'RU';
-
-// Функция для переключения языка
-function switchLanguage(lang) {
-    currentLanguage = lang;
-    updateLanguage();
-    saveLanguageToStorage();
-}
-
-// Функция для обновления языка на странице
-function updateLanguage() {
-    const lang = translations[currentLanguage];
-    
-    // Обновляем язык в хедере
-    document.querySelector('.language-switch span').textContent = currentLanguage;
-    document.querySelector('.support-btn').textContent = lang.supportLink;
-    document.getElementById('authBtn').textContent = lang.authBtn;
-    document.getElementById('logoutBtn').textContent = lang.logoutBtn;
-    
-    // Обновляем главную страницу
-    document.querySelector('.hero h1').textContent = lang.heroTitle;
-    document.querySelector('.hero p').textContent = lang.heroText;
-    document.querySelector('.btn-primary').textContent = lang.downloadBtn;
-    document.querySelector('.btn-secondary').textContent = lang.moreInfoBtn;
-    document.querySelector('.features h2').textContent = lang.featuresTitle;
-    document.querySelector('.features p').textContent = lang.featuresSubtitle;
-    
-    // Обновляем карточки особенностей
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards[0].querySelector('h3').textContent = lang.feature1Title;
-    featureCards[0].querySelector('p').textContent = lang.feature1Text;
-    featureCards[1].querySelector('h3').textContent = lang.feature2Title;
-    featureCards[1].querySelector('p').textContent = lang.feature2Text;
-    featureCards[2].querySelector('h3').textContent = lang.feature3Title;
-    featureCards[2].querySelector('p').textContent = lang.feature3Text;
-    featureCards[3].querySelector('h3').textContent = lang.feature4Title;
-    featureCards[3].querySelector('p').textContent = lang.feature4Text;
-    featureCards[4].querySelector('h3').textContent = lang.feature5Title;
-    featureCards[4].querySelector('p').textContent = lang.feature5Text;
-    
-    // Обновляем футер
-    document.querySelectorAll('.footer-section h3')[0].textContent = lang.footerTitle;
-    document.querySelectorAll('.footer-section p')[0].textContent = lang.footerSubtitle;
-    document.querySelectorAll('.footer-section a')[0].textContent = lang.nav1;
-    document.querySelectorAll('.footer-section a')[1].textContent = lang.nav2;
-    document.querySelectorAll('.footer-section a')[2].textContent = lang.nav3;
-    document.querySelectorAll('.footer-section a')[3].textContent = lang.docs1;
-    document.querySelectorAll('.footer-section a')[4].textContent = lang.docs2;
-    document.querySelectorAll('.footer-section a')[5].textContent = lang.docs3;
-    document.querySelector('.footer-section:nth-child(4) h3').textContent = lang.contacts;
-    document.querySelector('.footer-bottom p').textContent = lang.copyright;
-    
-    // Обновляем модальное окно авторизации
-    document.querySelector('#loginForm .auth-title').textContent = lang.loginTitle;
-    document.querySelector('#registerForm .auth-title').textContent = lang.registerTitle;
-    document.querySelector('#loginForm .form-group:nth-child(1) .form-label').textContent = lang.usernameLabel;
-    document.querySelector('#registerForm .form-group:nth-child(1) .form-label').textContent = lang.usernameLabel;
-    document.querySelector('#registerForm .form-group:nth-child(2) .form-label').textContent = lang.emailLabel;
-    document.querySelector('#loginForm .form-group:nth-child(2) .form-label').textContent = lang.passwordLabel;
-    document.querySelector('#registerForm .form-group:nth-child(3) .form-label').textContent = lang.passwordLabel;
-    document.querySelector('#registerForm .form-group:nth-child(4) .form-label').textContent = lang.confirmPasswordLabel;
-    document.querySelector('#loginForm .auth-submit').textContent = lang.loginBtn;
-    document.querySelector('#registerForm .auth-submit').textContent = lang.registerBtn;
-    document.querySelector('#loginForm .auth-switch').innerHTML = `${lang.noAccount} <span class="auth-switch-link" id="showRegister">${lang.signUp}</span>`;
-    document.querySelector('#registerForm .auth-switch').innerHTML = `${lang.haveAccount} <span class="auth-switch-link" id="showLogin">${lang.signIn}</span>`;
-    
-    // Обновляем дашборд
-    document.getElementById('backBtn').textContent = lang.backBtn;
-    document.querySelector('.dashboard-title').textContent = lang.dashboardTitle;
-    document.querySelectorAll('.dashboard-card h3')[0].textContent = 'Profile information';
-    document.querySelectorAll('.dashboard-card h3')[1].textContent = 'Account statistics';
-    document.querySelectorAll('.dashboard-card h3')[2].textContent = 'LunixDLC';
-}
-
-// Сохранение языка в localStorage
-function saveLanguageToStorage() {
-    localStorage.setItem('lunixDLC_language', currentLanguage);
-}
-
-// Загрузка языка из localStorage
-function loadLanguageFromStorage() {
-    const lang = localStorage.getItem('lunixDLC_language');
-    if (lang && translations[lang]) {
-        currentLanguage = lang;
-    }
-}
-
-// Инициализация переключателя языка
-function initLanguageSwitcher() {
-    const languageOptions = document.querySelectorAll('.language-option');
-    
-    languageOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const lang = this.textContent;
-            switchLanguage(lang);
-            
-            // Закрываем выпадающее меню после выбора
-            document.querySelector('.language-dropdown').style.maxHeight = '0';
-        });
-    });
-}
-
-// Обновляем инициализацию приложения
-document.addEventListener('DOMContentLoaded', function() {
-    // Загружаем язык из localStorage
-    loadLanguageFromStorage();
-    
-    // Инициализируем переключатель языка
-    initLanguageSwitcher();
-    
-    // Обновляем язык на странице
-    updateLanguage();
-    
-    // Остальной код инициализации...
-    pageManager = new PageManager();
-    userManager = new UserManager();
-    authModal = new AuthModal(userManager);
-
-    document.getElementById('backBtn').addEventListener('click', () => {
-        pageManager.showHome();
-    });
-
-    // ... остальной код инициализации
-});
-    </script>
 </body>
 
 </html>
-
-
-
-
-
-
