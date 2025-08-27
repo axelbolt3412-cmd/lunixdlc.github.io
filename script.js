@@ -8,11 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initParallaxEffects();
 });
 
-// Кастомный курсор
-function initCursorFollower() {
-    const cursor = document.querySelector('.cursor-follower');
-    const links = document.querySelectorAll('a, button');
-
     // Плавное следование за курсором
     document.addEventListener('mousemove', (e) => {
         cursorX = e.clientX;
@@ -309,4 +304,5 @@ window.addEventListener('load', function() {
         // Инициализируем дополнительные эффекты после загрузки
         initGlitchEffect();
     }, 500);
+
 }); 
