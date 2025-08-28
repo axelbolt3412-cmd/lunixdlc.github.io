@@ -1,7 +1,6 @@
 // Ждем загрузку DOM
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация всех компонентов
-    initCursorFollower();
     initSmoothScrolling();
     initHeaderScroll();
     initGallery();
@@ -291,3 +290,4 @@ window.addEventListener('load', function() {
     }, 500);
 
 }); 
+
