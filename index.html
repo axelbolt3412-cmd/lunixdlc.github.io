@@ -10,17 +10,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Стили для видео-лого */
-        .logo-video {
+        /* Стили для логотипа */
+        .logo-img {
             width: 40px;
             height: 40px;
             margin-right: 12px;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
 
-        .logo:hover .logo-video {
+        .logo:hover .logo-img {
             transform: scale(1.1);
             filter: brightness(1.2);
         }
@@ -32,9 +32,8 @@
     
     <header>
         <div class="logo">
-            <video autoplay loop muted playsinline class="logo-video">
-                <source src="https://i.imgur.com/pepvyHm.mp4" type="video/mp4">
-            </video>
+            <img src="https://i.imgur.com/pepvyHm.png" alt="Логотип" class="logo-img">
+            <span>Lunix DLC</span>
         </div>
         <nav>
             <ul>
@@ -48,7 +47,7 @@
 
     <section id="hero" class="hero-section">
         <div class="hero-content">
-            <h1 class="glitch" data-text="ExpressClient">ExpressClient</h1>
+            <h1 class="glitch" data-text="ShadowCraft">ShadowCraft</h1>
             <p class="tagline">Доминируй в Minecraft без ограничений</p>
             <div class="hero-description">
                 <p>Самый мощный чит-клиент, который ебет все античиты и дает тебе абсолютное преимущество на любом сервере.</p>
@@ -161,5 +160,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
