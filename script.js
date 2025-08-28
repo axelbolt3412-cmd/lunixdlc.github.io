@@ -5,43 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeaderScroll();
     initGallery();
     initParallaxEffects();
+    initGlitchEffect();
 });
-
-    // Эффект при наведении на интерактивные элементы
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) scale(1.5)`;
-            cursor.style.borderColor = '#7b68ee';
-            cursor.style.transition = 'transform 0.3s, border-color 0.3s';
-        });
-
-        link.addEventListener('mouseleave', () => {
-            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) scale(1)`;
-            cursor.style.borderColor = '#7b68ee';
-            cursor.style.transition = 'transform 0.3s, border-color 0.3s';
-        });
-    });
-
-    // Используем requestAnimationFrame для плавного движения курсора
-    let cursorX = 0;
-    let cursorY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    function render() {
-        // Плавная интерполяция движения
-        currentX += (cursorX - currentX) * 0.1;
-        currentY += (cursorY - currentY) * 0.1;
-        
-        if (cursor) {
-            cursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
-        }
-        
-        requestAnimationFrame(render);
-    }
-
-    requestAnimationFrame(render);
-}
 
 // Вспомогательная функция для анимации прозрачности
 function fadeElement(element, targetOpacity, duration) {
@@ -66,7 +31,7 @@ function fadeElement(element, targetOpacity, duration) {
 
 // Плавная прокрутка
 function initSmoothScrolling() {
-    const links = document.querySelectorAll('.nav-link, .cta-button');
+    const links = document.querySelectorAll('.nav-link, .cta-button, .download-button');
 
     links.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -74,7 +39,7 @@ function initSmoothScrolling() {
             const targetId = this.getAttribute('href');
             
             // Проверяем, является ли ссылка якорем на текущей странице
-            if (targetId.startsWith('#')) {
+            if (targetId && targetId.startsWith('#')) {
                 e.preventDefault();
                 
                 // Находим элемент, к которому нужно прокрутить
@@ -95,6 +60,8 @@ function initSmoothScrolling() {
 // Эффект прокрутки для хедера
 function initHeaderScroll() {
     const header = document.querySelector('header');
+    if (!header) return;
+    
     let lastScrollTop = 0;
     
     window.addEventListener('scroll', function() {
@@ -105,6 +72,13 @@ function initHeaderScroll() {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
+        }
+        
+        // Скрываем/показываем header при скролле
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
         }
         
         lastScrollTop = scrollTop;
@@ -118,8 +92,11 @@ function initGallery() {
     const prevBtn = document.querySelector('.gallery-arrow.prev');
     const nextBtn = document.querySelector('.gallery-arrow.next');
     
+    if (galleryItems.length === 0) return;
+    
     let currentIndex = 0;
     const itemCount = galleryItems.length;
+    let galleryInterval;
     
     // Функция для отображения элемента по индексу
     function showItem(index) {
@@ -127,6 +104,7 @@ function initGallery() {
         galleryItems.forEach(item => {
             item.style.opacity = '0';
             item.style.zIndex = '0';
+            item.classList.remove('active');
         });
         
         // Убираем активный класс у всех точек
@@ -137,9 +115,12 @@ function initGallery() {
         // Показываем текущий элемент
         galleryItems[index].style.opacity = '1';
         galleryItems[index].style.zIndex = '1';
+        galleryItems[index].classList.add('active');
         
         // Добавляем активный класс к соответствующей точке
-        dots[index].classList.add('active');
+        if (dots[index]) {
+            dots[index].classList.add('active');
+        }
         
         // Обновляем текущий индекс
         currentIndex = index;
@@ -151,6 +132,7 @@ function initGallery() {
             let newIndex = currentIndex - 1;
             if (newIndex < 0) newIndex = itemCount - 1;
             showItem(newIndex);
+            resetGalleryInterval();
         });
     }
     
@@ -159,6 +141,7 @@ function initGallery() {
             let newIndex = currentIndex + 1;
             if (newIndex >= itemCount) newIndex = 0;
             showItem(newIndex);
+            resetGalleryInterval();
         });
     }
     
@@ -166,15 +149,27 @@ function initGallery() {
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             showItem(index);
+            resetGalleryInterval();
         });
     });
     
+    // Функция для сброса интервала
+    function resetGalleryInterval() {
+        clearInterval(galleryInterval);
+        startGalleryInterval();
+    }
+    
+    // Функция для запуска интервала
+    function startGalleryInterval() {
+        galleryInterval = setInterval(() => {
+            let newIndex = currentIndex + 1;
+            if (newIndex >= itemCount) newIndex = 0;
+            showItem(newIndex);
+        }, 5000);
+    }
+    
     // Автоматическая смена слайдов
-    let galleryInterval = setInterval(() => {
-        let newIndex = currentIndex + 1;
-        if (newIndex >= itemCount) newIndex = 0;
-        showItem(newIndex);
-    }, 5000);
+    startGalleryInterval();
     
     // Останавливаем автоматическую смену при наведении
     const galleryContainer = document.querySelector('.gallery-container');
@@ -184,13 +179,12 @@ function initGallery() {
         });
         
         galleryContainer.addEventListener('mouseleave', () => {
-            galleryInterval = setInterval(() => {
-                let newIndex = currentIndex + 1;
-                if (newIndex >= itemCount) newIndex = 0;
-                showItem(newIndex);
-            }, 5000);
+            startGalleryInterval();
         });
     }
+    
+    // Инициализация первого элемента
+    showItem(0);
 }
 
 // Параллакс эффекты
@@ -215,17 +209,8 @@ function initParallaxEffects() {
             const elements = document.querySelectorAll(item.element);
             
             elements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                const elementCenterX = rect.left + rect.width / 2;
-                const elementCenterY = rect.top + rect.height / 2;
-                
-                // Рассчитываем дистанцию от центра элемента до центра экрана
-                const distanceX = (elementCenterX - centerX) * 0.01;
-                const distanceY = (elementCenterY - centerY) * 0.01;
-                
-                // Применяем эффект параллакса с учетом расстояния
-                const moveX = mouseX * item.speed + distanceX;
-                const moveY = mouseY * item.speed + distanceY;
+                const moveX = mouseX * item.speed;
+                const moveY = mouseY * item.speed;
                 
                 el.style.transform = `translate(${moveX}px, ${moveY}px)`;
             });
@@ -234,20 +219,17 @@ function initParallaxEffects() {
     
     // Анимация при скролле
     const animateOnScroll = () => {
-        const elements = document.querySelectorAll('.feature-card, .advantage-item, .gallery-item, .download-button');
+        const elements = document.querySelectorAll('.feature-card, .advantage-item, .gallery-item, .download-button, .floating-cube');
         
         elements.forEach(el => {
             const elementTop = el.getBoundingClientRect().top;
-            const elementBottom = el.getBoundingClientRect().bottom;
             const windowHeight = window.innerHeight;
             
             // Если элемент в области видимости
-            if (elementTop < windowHeight * 0.9 && elementBottom > 0) {
+            if (elementTop < windowHeight * 0.85) {
                 el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            } else {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
+                el.style.transform = 'translateY(0) scale(1)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             }
         });
     };
@@ -260,34 +242,199 @@ function initParallaxEffects() {
 // Инициализация эффекта глитча
 function initGlitchEffect() {
     const glitchElements = document.querySelectorAll('.glitch');
+    if (glitchElements.length === 0) return;
     
     glitchElements.forEach(el => {
         // Создаем интервал для случайного глитча
         setInterval(() => {
-            // Случайное смещение для эффекта глитча
-            const glitchX = Math.random() * 10 - 5; // от -5 до 5
-            const glitchY = Math.random() * 10 - 5; // от -5 до 5
-            
-            // Применяем CSS-трансформацию
-            el.style.transform = `translate(${glitchX}px, ${glitchY}px)`;
-            
-            // Возвращаем в исходное положение через короткое время
-            setTimeout(() => {
-                el.style.transform = 'translate(0, 0)';
-            }, 100);
+            if (Math.random() > 0.7) { // 30% chance of glitch
+                // Случайное смещение для эффекта глитча
+                const glitchX = Math.random() * 8 - 4; // от -4 до 4
+                const glitchY = Math.random() * 8 - 4; // от -4 до 4
+                
+                // Сохраняем оригинальную трансформацию
+                const originalTransform = el.style.transform;
+                
+                // Применяем CSS-трансформацию
+                el.style.transform = `${originalTransform} translate(${glitchX}px, ${glitchY}px)`;
+                
+                // Возвращаем в исходное положение через короткое время
+                setTimeout(() => {
+                    el.style.transform = originalTransform;
+                }, 100);
+            }
         }, 3000); // Интервал между глитчами
+    });
+}
+
+// Анимация печатающегося текста
+function initTypingEffect() {
+    const typingElements = document.querySelectorAll('.typing-effect');
+    
+    typingElements.forEach(el => {
+        const text = el.textContent;
+        el.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        
+        // Запускаем анимацию когда элемент появляется в viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    typeWriter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(el);
+    });
+}
+
+// Обработка форм
+function initForms() {
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Здесь можно добавить логику отправки формы
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            if (submitBtn) {
+                submitBtn.textContent = 'Отправка...';
+                submitBtn.disabled = true;
+            }
+            
+            // Имитация отправки
+            setTimeout(() => {
+                if (submitBtn) {
+                    submitBtn.textContent = 'Отправлено!';
+                    submitBtn.style.backgroundColor = '#4CAF50';
+                }
+                this.reset();
+                
+                // Возвращаем исходное состояние через 2 секунды
+                setTimeout(() => {
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Отправить';
+                        submitBtn.disabled = false;
+                        submitBtn.style.backgroundColor = '';
+                    }
+                }, 2000);
+            }, 1500);
+        });
+    });
+}
+
+// Анимация чисел (счетчики)
+function initCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 2000; // 2 seconds
+        const frameDuration = 1000 / 60; // 60 fps
+        const totalFrames = Math.round(duration / frameDuration);
+        let frame = 0;
+        
+        const countTo = parseInt(counter.innerText, 10);
+        
+        const counterInterval = setInterval(() => {
+            frame++;
+            
+            const progress = frame / totalFrames;
+            const currentCount = Math.round(countTo + (target - countTo) * progress);
+            
+            counter.innerText = currentCount.toLocaleString();
+            
+            if (frame === totalFrames) {
+                clearInterval(counterInterval);
+            }
+        }, frameDuration);
     });
 }
 
 // Мягкая загрузка страницы
 window.addEventListener('load', function() {
-    // Скрываем прелоадер
+    // Скрываем прелоадер если есть
+    const preloader = document.querySelector('.preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 600);
+        }, 500);
+    }
+    
+    document.body.classList.add('loaded');
+    
+    // Инициализируем дополнительные эффекты после загрузки
+    initTypingEffect();
+    initForms();
+    initCounters();
+    
+    // Анимация появления элементов
     setTimeout(() => {
-        document.body.classList.add('loaded');
+        const animatedElements = document.querySelectorAll('.animate-on-load');
+        animatedElements.forEach((el, index) => {
+            setTimeout(() => {
+                el.classList.add('animated');
+            }, index * 200);
+        });
+    }, 300);
+});
+
+// Обработка ошибок изображений
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+    });
+});
+
+// Респонсив поведение
+function initResponsive() {
+    // Проверяем мобильное устройство
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Отключаем параллакс на мобильных
+        document.removeEventListener('mousemove', initParallaxEffects);
         
-        // Инициализируем дополнительные эффекты после загрузки
-        initGlitchEffect();
-    }, 500);
+        // Упрощаем анимации для мобильных
+        const complexAnimations = document.querySelectorAll('.floating-cube, .complex-animation');
+        complexAnimations.forEach(el => {
+            el.style.animation = 'none';
+        });
+    }
+    
+    // Обработчик изменения размера окна
+    window.addEventListener('resize', function() {
+        // Переинициализация при изменении размера
+        initResponsive();
+    });
+}
 
-}); 
+// Инициализация респонсив поведения
+initResponsive();
 
+// Добавляем класс touch для тач-устройств
+if ('ontouchstart' in window || navigator.maxTouchPoints) {
+    document.body.classList.add('touch-device');
+} else {
+    document.body.classList.add('mouse-device');
+}
