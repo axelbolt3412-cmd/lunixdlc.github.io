@@ -8,26 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initParallaxEffects();
 });
 
-// Кастомный курсор
-function initCursorFollower() {
-    const cursor = document.querySelector('.cursor-follower');
-    const links = document.querySelectorAll('a, button');
-
-    // Плавное следование за курсором
-    document.addEventListener('mousemove', (e) => {
-        cursorX = e.clientX;
-        cursorY = e.clientY;
-    });
-
-    // Показываем курсор только когда мышь на странице
-    document.addEventListener('mouseenter', () => {
-        fadeElement(cursor, 1, 300);
-    });
-
-    document.addEventListener('mouseleave', () => {
-        fadeElement(cursor, 0, 300);
-    });
-
     // Эффект при наведении на интерактивные элементы
     links.forEach(link => {
         link.addEventListener('mouseenter', () => {
@@ -309,4 +289,5 @@ window.addEventListener('load', function() {
         // Инициализируем дополнительные эффекты после загрузки
         initGlitchEffect();
     }, 500);
+
 }); 
